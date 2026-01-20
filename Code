@@ -1,0 +1,37 @@
+char* convert(char* s, int numRows) {
+    int len = 0;
+    while (s[len] != '\0') len++;
+
+    if (numRows == 1 || numRows >= len)
+        return s;
+
+    char rows[numRows][len + 1];
+    int rowCount[numRows];
+
+    for (int i = 0; i < numRows; i++)
+        rowCount[i] = 0;
+
+    int currRow = 0;
+    int direction = 1;
+
+    for (int i = 0; i < len; i++) {
+        rows[currRow][rowCount[currRow]++] = s[i];
+
+        if (currRow == 0)
+            direction = 1;
+        else if (currRow == numRows - 1)
+            direction = -1;
+
+        currRow += direction;
+    }
+
+    int index = 0;
+    for (int i = 0; i < numRows; i++) {
+        for (int j = 0; j < rowCount[i]; j++) {
+            s[index++] = rows[i][j];
+        }
+    }
+
+    s[index] = '\0';
+    return s;
+}
